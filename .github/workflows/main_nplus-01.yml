@@ -27,14 +27,11 @@ jobs:
           npm run build --if-present
           npm run test --if-present
 
-      - name: Zip all files for upload between jobs
-        run: zip --symlinks -r next.zip ./*
-
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
           name: node-app
-          path: next.zip
+          path: .
 
   deploy:
     runs-on: ubuntu-latest
@@ -56,4 +53,4 @@ jobs:
           app-name: 'nplus-01'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_686996CFDFCB4EA8B49132FAA8AFA1CA }}
-          package: next.zip
+          package: .
